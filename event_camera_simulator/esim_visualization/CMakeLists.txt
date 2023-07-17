@@ -22,6 +22,7 @@ set(HEADERS
     include/esim/visualization/rosbag_writer.hpp
     include/esim/visualization/adaptive_sampling_benchmark_publisher.hpp
     include/esim/visualization/synthetic_optic_flow_publisher.hpp
+    include/esim/visualization/hdr_publisher.hpp
 )
 
 set(SOURCES
@@ -30,6 +31,7 @@ set(SOURCES
     src/rosbag_writer.cpp
     src/adaptive_sampling_benchmark_publisher.cpp
     src/synthetic_optic_flow_publisher.cpp
+    src/hdr_publisher.cpp
 )
 
 cs_add_library(${PROJECT_NAME} ${SOURCES} ${HEADERS})
