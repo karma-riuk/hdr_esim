@@ -88,7 +88,6 @@ namespace event_camera_simulator {
                         << buffer_->getExposureTime() << std::endl;
         exposures_file_.close();
 
-
         *camera_image /= denom;
         cv::Mat disp;
         camera_image->convertTo(disp, CV_8U, 255);

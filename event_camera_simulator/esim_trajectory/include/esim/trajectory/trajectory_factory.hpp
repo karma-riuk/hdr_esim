@@ -5,6 +5,9 @@
 
 namespace event_camera_simulator {
 
-std::tuple<ze::TrajectorySimulator::Ptr, std::vector<ze::TrajectorySimulator::Ptr>> loadTrajectorySimulatorFromGflags();
+    std::tuple<
+        ze::TrajectorySimulator::Ptr,
+        std::vector<ze::TrajectorySimulator::Ptr>>
+    loadTrajectorySimulatorFromGflags();
 
 } // namespace event_camera_simulator

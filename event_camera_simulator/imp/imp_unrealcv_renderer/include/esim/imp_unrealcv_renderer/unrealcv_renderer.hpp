@@ -4,31 +4,39 @@
 
 namespace event_camera_simulator {
 
-class UnrealCvClient; // fwd
+    class UnrealCvClient; // fwd
 
-class UnrealCvRenderer : public Renderer
-{
-public:
+    class UnrealCvRenderer : public Renderer {
+      public:
+        UnrealCvRenderer();
 
-  UnrealCvRenderer();
+        //! Render image and depth map for a given camera pose
+        virtual void render(
+            const Transformation& T_W_C,
+            const ImagePtr& out_image,
+            const DepthmapPtr& out_depthmap
+        ) const;
 
-  //! Render image and depth map for a given camera pose
-  virtual void render(const Transformation& T_W_C, const ImagePtr &out_image, const DepthmapPtr &out_depthmap) const;
+        void render(
+            const Transformation& T_W_C,
+            const std::vector<Transformation>& T_W_OBJ,
+            const ImagePtr& out_image,
+            const DepthmapPtr& out_depthmap
+        ) const {
+            render(T_W_C, out_image, out_depthmap);
+        }
 
-  void render(const Transformation& T_W_C, const std::vector<Transformation>& T_W_OBJ, const ImagePtr &out_image, const DepthmapPtr &out_depthmap) const
-  {
-      render(T_W_C, out_image, out_depthmap);
-  }
+        //! Returns true if the rendering engine can compute optic flow, false
+        //! otherwise
+        virtual bool canComputeOpticFlow() const override {
+            return false;
+        }
 
-  //! Returns true if the rendering engine can compute optic flow, false otherwise
-  virtual bool canComputeOpticFlow() const override { return false; }
+        virtual void setCamera(const ze::Camera::Ptr& camera) override;
 
-  virtual void setCamera(const ze::Camera::Ptr& camera) override;
+      private:
+        std::shared_ptr<UnrealCvClient> client_;
+        mutable size_t frame_idx_;
+    };
 
-private:
-  std::shared_ptr<UnrealCvClient> client_;
-  mutable size_t frame_idx_;
-};
-
-
-}
+} // namespace event_camera_simulator
