@@ -1,4 +1,3 @@
-#include "esim/common/string_format.hpp"
 #include "opencv2/imgcodecs.hpp"
 
 #include <esim/esim/camera_simulator.hpp>
