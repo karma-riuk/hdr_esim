@@ -94,7 +94,7 @@ void OpenGLRenderer::init()
 
 
   // create multisampled framebuffer object
-  static const int num_samples = 16;
+  static const int num_samples = 4;
   glGenFramebuffers(1, &multisampled_fbo);
   glBindFramebuffer(GL_FRAMEBUFFER, multisampled_fbo);
 
