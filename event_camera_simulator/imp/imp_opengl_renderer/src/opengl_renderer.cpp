@@ -1,15 +1,36 @@
-#include <GLFW/glfw3.h>
+// #include <GLFW/glfw3.h>
+// #include <esim/imp_opengl_renderer/opengl_renderer.hpp>
+// #include <glad/glad.h>
+// #include <glm/glm.hpp>
+// #include <glm/gtc/matrix_transform.hpp>
+// #include <glm/gtc/type_ptr.hpp>
+// #include <learnopengl/filesystem.h>
+// #include <learnopengl/model.h>
+// #include <learnopengl/shader.h>
+// #include <opencv2/core/core.hpp>
+// #include <opencv2/highgui/highgui.hpp>
+// #include <opencv2/imgproc/imgproc.hpp>
+
+// clang-format off
+// apparently the order of the includes matter (??????)
+// and formatting it to respect some standard makes the compilation fail :)
 #include <esim/imp_opengl_renderer/opengl_renderer.hpp>
+
 #include <glad/glad.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-#include <learnopengl/filesystem.h>
-#include <learnopengl/model.h>
 #include <learnopengl/shader.h>
+#include <learnopengl/model.h>
+#include <GLFW/glfw3.h>
+
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
+#include <learnopengl/filesystem.h>
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
+
+// clang-format on
 
 namespace event_camera_simulator {
 
