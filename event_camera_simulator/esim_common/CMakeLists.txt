@@ -9,10 +9,12 @@ catkin_simple()
 set(HEADERS
     include/esim/common/types.hpp
     include/esim/common/utils.hpp
+    include/esim/common/hdr.hpp
 )
 
 set(SOURCES
     src/utils.cpp
+    src/hdr.cpp
 )
 
 cs_add_library(${PROJECT_NAME} ${SOURCES} ${HEADERS})

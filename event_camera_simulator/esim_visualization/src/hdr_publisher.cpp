@@ -1,9 +1,9 @@
 #include "esim/common/types.hpp"
 #include "kindr/minimal/rotation-quaternion.h"
 
+#include <esim/common/hdr.hpp>
 #include <esim/common/utils.hpp>
 #include <esim/visualization/hdr_publisher.hpp>
-#include <gflags/gflags.h>
 #include <glog/logging.h>
 #include <iomanip>
 #include <opencv2/highgui/highgui.hpp>
@@ -11,12 +11,6 @@
 #include <ze/common/file_utils.hpp>
 #include <ze/common/path_utils.hpp>
 #include <ze/common/time_conversions.hpp>
-
-DEFINE_string(
-    hdr_output_folder,
-    "/home/arno/sim_ws/out",
-    "Folder in which to output the events."
-);
 
 namespace event_camera_simulator {
 
@@ -80,13 +74,13 @@ namespace event_camera_simulator {
     }
 
     Publisher::Ptr HdrPublisher::createFromGflags() {
-        if (FLAGS_hdr_output_folder == "") {
+        if (hdr_output_folder == "") {
             LOG(WARNING) << "Empty output folder string: will not write "
                             "hdr files";
             return nullptr;
         }
 
-        return std::make_shared<HdrPublisher>(FLAGS_hdr_output_folder);
+        return std::make_shared<HdrPublisher>(hdr_output_folder);
     }
 
     HdrPublisher::~HdrPublisher() {

@@ -1,16 +1,14 @@
 #include "opencv2/imgcodecs.hpp"
 
+#include <esim/common/hdr.hpp>
 #include <esim/esim/camera_simulator.hpp>
 #include <fstream>
 #include <iomanip>
 #include <ostream>
 #include <ze/common/file_utils.hpp>
 
-#define FRAME_DIR_PATH "/home/arno/sim_ws/out/frames"
-
 static uint frame_number = 0;
 static std::ofstream exposures_file_;
-static std::string output_folder = "/home/arno/sim_ws/out";
 
 namespace event_camera_simulator {
 
@@ -69,7 +67,7 @@ namespace event_camera_simulator {
         static uint frame_number = 0;
 
         std::stringstream ss;
-        ss << output_folder << "/frames/frame_" << std::setfill('0')
+        ss << hdr_output_folder << "/frames/frame_" << std::setfill('0')
            << std::setw(5) << frame_number++ << ".exr";
         std::string frame_path = ss.str();
         cv::imwrite(frame_path, *camera_image);
@@ -80,7 +78,7 @@ namespace event_camera_simulator {
         // );
 
         exposures_file_.open(
-            ze::joinPath(output_folder, "exposures.csv"),
+            ze::joinPath(hdr_output_folder, "exposures.csv"),
             std::ios::app
         );
         exposures_file_ << time << "," << frame_number << ","
