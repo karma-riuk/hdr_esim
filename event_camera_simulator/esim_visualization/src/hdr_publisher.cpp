@@ -100,14 +100,14 @@ namespace event_camera_simulator {
     }
 
     void HdrPublisher::imageCallback(const ImagePtrVector& images, Time t) {
-        CHECK_EQ(images.size(), 1);
-        static uint frame_number = 0;
-        std::stringstream ss;
-        ss << output_folder_ << "/frames/frame_" << std::setfill('0')
-           << std::setw(5) << frame_number++ << ".exr";
-        std::string frame_path = ss.str();
-
-        cv::imwrite(frame_path, *images[0]);
+        // CHECK_EQ(images.size(), 1);
+        // static uint frame_number = 0;
+        // std::stringstream ss;
+        // ss << output_folder_ << "/frames/frame_" << std::setfill('0')
+        //    << std::setw(5) << frame_number++ << ".exr";
+        // std::string frame_path = ss.str();
+        //
+        // cv::imwrite(frame_path, *images[0]);
     }
 
     void HdrPublisher::eventsCallback(const EventsVector& events) {
