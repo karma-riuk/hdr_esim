@@ -2,3 +2,4 @@
 esim_ros/scripts/exp_*
 *.swp
 *.autosave
+.clang-format
