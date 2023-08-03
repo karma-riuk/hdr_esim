@@ -21,8 +21,9 @@ namespace event_camera_simulator {
             const Transformation& T_W_C,
             const std::vector<Transformation>& T_W_OBJ,
             const ImagePtr& out_image,
+            const ImageRGBPtr& out_image_rgb,
             const DepthmapPtr& out_depthmap
-        ) const {
+        ) const override {
             render(T_W_C, out_image, out_depthmap);
         }
 

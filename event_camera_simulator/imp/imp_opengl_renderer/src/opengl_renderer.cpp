@@ -17,6 +17,7 @@
 #include <esim/imp_opengl_renderer/opengl_renderer.hpp>
 
 #include <glad/glad.h>
+#include <iomanip>
 #include <learnopengl/shader.h>
 #include <learnopengl/model.h>
 #include <GLFW/glfw3.h>
@@ -314,18 +315,23 @@ namespace event_camera_simulator {
         const Transformation& T_W_C,
         const std::vector<Transformation>& T_W_OBJ,
         const ImagePtr& out_image,
+        const ImageRGBPtr& out_image_rgb,
         const DepthmapPtr& out_depthmap
     ) const {
         CHECK(is_initialized_) << "Called render() but the renderer was not "
                                   "initialized yet. Have you "
                                   "first called setCamera()?";
         CHECK(out_image);
+        CHECK(out_image_rgb);
         CHECK(out_depthmap);
         CHECK_EQ(out_image->cols, width_);
+        CHECK_EQ(out_image_rgb->cols, width_);
         CHECK_EQ(out_image->rows, height_);
+        CHECK_EQ(out_image_rgb->rows, height_);
         CHECK_EQ(out_depthmap->cols, width_);
         CHECK_EQ(out_depthmap->rows, height_);
         CHECK_EQ(out_image->type(), CV_32F);
+        CHECK_EQ(out_image_rgb->type(), CV_32FC3);
         CHECK_EQ(out_depthmap->type(), CV_32F);
 
         // draw to our framebuffer instead of screen
@@ -413,6 +419,29 @@ namespace event_camera_simulator {
 
         // read out what we just rendered
         cv::Mat img_color(height_, width_, CV_8UC3);
+        {
+            float pixels[height_ * width_ * 3];
+            glReadPixels(
+                0,
+                0,
+                img_color.cols,
+                img_color.rows,
+                GL_RGB,
+                GL_FLOAT,
+                pixels
+            );
+
+            cv::Mat rgb(height_, width_, CV_32FC3, pixels);
+            rgb.copyTo(*out_image_rgb);
+        }
+        // static uint frame_number = 0;
+
+        // std::stringstream ss;
+        // ss << "/tmp/tests"
+        //    << "/frames/frame_" << std::setfill('0') << std::setw(5)
+        //    << frame_number++ << ".exr";
+        // cv::imwrite(ss.str(), rgb);
+
         glPixelStorei(GL_PACK_ALIGNMENT, (img_color.step & 3) ? 1 : 4);
         glPixelStorei(
             GL_PACK_ROW_LENGTH,
@@ -480,10 +509,11 @@ namespace event_camera_simulator {
         const std::vector<LinearVelocity>& linear_velocity_obj,
         const std::vector<AngularVelocity>& angular_velocity_obj,
         const ImagePtr& out_image,
+        const ImageRGBPtr& out_image_rgb,
         const DepthmapPtr& out_depthmap,
         const OpticFlowPtr& optic_flow_map
     ) const {
-        render(T_W_C, T_W_OBJ, out_image, out_depthmap);
+        render(T_W_C, T_W_OBJ, out_image, out_image_rgb, out_depthmap);
 
         // draw to our optic flow framebuffer instead of screen
         glBindFramebuffer(GL_FRAMEBUFFER, fbo_of);

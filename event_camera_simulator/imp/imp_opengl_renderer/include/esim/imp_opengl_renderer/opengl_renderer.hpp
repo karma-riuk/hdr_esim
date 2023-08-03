@@ -24,8 +24,9 @@ namespace event_camera_simulator {
             const Transformation& T_W_C,
             const std::vector<Transformation>& T_W_OBJ,
             const ImagePtr& out_image,
+            const ImageRGBPtr& out_image_rgb,
             const DepthmapPtr& out_depthmap
-        ) const;
+        ) const override;
 
         //! Returns true if the rendering engine can compute optic flow, false
         //! otherwise
@@ -43,6 +44,7 @@ namespace event_camera_simulator {
             const std::vector<LinearVelocity>& linear_velocity_obj,
             const std::vector<AngularVelocity>& angular_velocity_obj,
             const ImagePtr& out_image,
+            const ImageRGBPtr& out_image_rgb,
             const DepthmapPtr& out_depthmap,
             const OpticFlowPtr& optic_flow_map
         ) const override;

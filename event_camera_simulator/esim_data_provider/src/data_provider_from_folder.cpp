@@ -1,4 +1,11 @@
+#include "esim/imp_multi_objects_2d/object.hpp"
+#include "opencv2/imgcodecs.hpp"
+#include "opencv2/imgproc.hpp"
+#include "opencv2/imgproc/types_c.h"
+
+#include <cstdint>
 #include <esim/data_provider/data_provider_from_folder.hpp>
+#include <iostream>
 #include <opencv2/imgcodecs/imgcodecs.hpp>
 #include <ze/cameras/camera_impl.hpp>
 #include <ze/common/file_utils.hpp>
@@ -40,6 +47,11 @@ namespace event_camera_simulator {
         sim_data_.images.emplace_back(ImagePtr(new Image(
             cv::Size(camera_rig_->at(0).width(), camera_rig_->at(0).height())
         )));
+        sim_data_.images_rgb.emplace_back(ImageRGBPtr(new ImageRGB(
+            camera_rig_->at(0).width(),
+            camera_rig_->at(0).height(),
+            CV_32FC3
+        )));
 
         sim_data_.camera_rig = camera_rig_;
         sim_data_.images_updated = true;
@@ -74,12 +86,17 @@ namespace event_camera_simulator {
 
             const std::string& path_to_image =
                 ze::joinPath(path_to_data_folder_, items[1]);
-            cv::Mat image = cv::imread(path_to_image, 0);
+            cv::Mat image = cv::imread(path_to_image);
             CHECK(image.data)
                 << "Could not load image from file: " << path_to_image;
 
             VLOG(3) << "Read image from file: " << path_to_image;
-            image.convertTo(
+            image.copyTo(*sim_data_.images_rgb[0]);
+
+            cv::Mat image_gray = image;
+            cv::cvtColor(image, image_gray, CV_BGR2GRAY);
+
+            image_gray.convertTo(
                 *sim_data_.images[0],
                 cv::DataType<ImageFloatType>::type,
                 1. / 255.

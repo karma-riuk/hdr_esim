@@ -46,6 +46,7 @@ namespace event_camera_simulator {
                     camera_simulator_success =
                         camera_simulators_[i].imageCallback(
                             *sim_data.images[i],
+                            *sim_data.images_rgb[i],
                             time,
                             corrupted_camera_images_[i]
                         );

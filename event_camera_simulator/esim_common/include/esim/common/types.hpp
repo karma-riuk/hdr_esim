@@ -42,12 +42,15 @@ namespace event_camera_simulator {
     using Duration = ze::uint64_t;
     using Image = cv::Mat_<ImageFloatType>;
     using ImagePtr = std::shared_ptr<Image>;
+    using ImageRGB = cv::Mat;
+    using ImageRGBPtr = std::shared_ptr<ImageRGB>;
     using Depthmap = cv::Mat_<ImageFloatType>;
     using OpticFlow = cv::Mat_<cv::Vec<ImageFloatType, 2>>;
     using OpticFlowPtr = std::shared_ptr<OpticFlow>;
     using DepthmapPtr = std::shared_ptr<Depthmap>;
 
     using ImagePtrVector = std::vector<ImagePtr>;
+    using ImageRGBPtrVector = std::vector<ImageRGBPtr>;
     using DepthmapPtrVector = std::vector<DepthmapPtr>;
     using OpticFlowPtrVector = std::vector<OpticFlowPtr>;
 
@@ -98,6 +101,7 @@ namespace event_camera_simulator {
 
         //! Camera images.
         ImagePtrVector images;
+        ImageRGBPtrVector images_rgb;
 
         //! Depth maps.
         DepthmapPtrVector depthmaps;

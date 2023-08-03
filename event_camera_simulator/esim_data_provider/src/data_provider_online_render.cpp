@@ -103,11 +103,15 @@ namespace event_camera_simulator {
             );
 
             sim_data_.images.emplace_back(ImagePtr(new Image(size)));
+            sim_data_.images_rgb.emplace_back(
+                ImageRGBPtr(new ImageRGB(size, CV_32FC3))
+            );
             sim_data_.depthmaps.emplace_back(DepthmapPtr(new Depthmap(size)));
             sim_data_.optic_flows.emplace_back(OpticFlowPtr(new OpticFlow(size))
             );
 
             sim_data_.images[i]->setTo(0);
+            sim_data_.images_rgb[i]->setTo(0);
             sim_data_.depthmaps[i]->setTo(0);
             sim_data_.optic_flows[i]->setTo(0);
         }
@@ -241,6 +245,7 @@ namespace event_camera_simulator {
                         sim_data_.groundtruth.linear_velocity_obj_,
                         sim_data_.groundtruth.angular_velocity_obj_,
                         sim_data_.images[i],
+                        sim_data_.images_rgb[i],
                         sim_data_.depthmaps[i],
                         sim_data_.optic_flows[i]
                     );
@@ -249,6 +254,7 @@ namespace event_camera_simulator {
                         sim_data_.groundtruth.T_W_B * camera_rig_->T_B_C(i),
                         sim_data_.groundtruth.T_W_OBJ_,
                         sim_data_.images[i],
+                        sim_data_.images_rgb[i],
                         sim_data_.depthmaps[i]
                     );
                 }

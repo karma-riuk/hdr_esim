@@ -11,12 +11,16 @@ namespace event_camera_simulator {
         ZE_POINTER_TYPEDEFS(ImageBuffer);
 
         struct ImageData {
-            ImageData(Image img, Time stamp, Duration exposure_time)
+            ImageData(
+                Image img, ImageRGB img_rgb, Time stamp, Duration exposure_time
+            )
                 : image(img),
+                  image_rgb(img_rgb),
                   stamp(stamp),
                   exposure_time(exposure_time) {}
 
             Image image;
+            ImageRGB image_rgb;
             Time stamp;
             Duration exposure_time; // timestamp since last image (0 if this is
                                     // the first image)
@@ -27,7 +31,7 @@ namespace event_camera_simulator {
         // Rolling image buffer of mazimum size 'buffer_size_ns'.
         ImageBuffer(Duration buffer_size_ns): buffer_size_ns_(buffer_size_ns) {}
 
-        void addImage(Time t, const Image& img);
+        void addImage(Time t, const Image& img, const ImageRGB& img_rgb);
 
         std::deque<ImageData> getRawBuffer() const {
             return data_;
@@ -63,7 +67,10 @@ namespace event_camera_simulator {
         }
 
         bool imageCallback(
-            const Image& img, Time time, const ImagePtr& camera_image
+            const Image& img,
+            const ImageRGB& img_rgb,
+            Time time,
+            const ImagePtr& camera_image
         );
 
       private:
